@@ -2,6 +2,7 @@
 
 @section('title', 'Главная')
 
+
 @section('content')
 <div class="starter-template">
     <h1>Все товары</h1>
