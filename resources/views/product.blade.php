@@ -1,10 +1,8 @@
-@extends('master')
-
+@extends('layouts/master')
 @section('title', 'товар')
 
 
 @section('content')
-<div class="starter-template">
     <h1>iPhone X 64GB</h1>
     <h2>{{ $product }}</h2>
     <h2>Мобильные телефоны</h2>
@@ -17,5 +15,4 @@
 
         <input type="hidden" name="_token" value="IBq6cteAhrnGX1BqW7vB412QSzpan3Xy7rXepUDD">
     </form>
-</div>   
 @endsection

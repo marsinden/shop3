@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BasketController extends Controller
@@ -10,16 +11,43 @@ class BasketController extends Controller
     public function basket()
     {
         $orderId = session('orderId');
-        if (!is_null($orderId)) {
+        if (is_null($orderId)) {
+            return view('welcome');
+        } else {
             $order = Order::findOrFail($orderId);
         }
-
+        // dump($order);
+        // dd($order->products()->get()->last()->name);
         return view('basket', compact('order'));
+        return view('basket', compact('order'));
+    }
+
+    public function basketConfirm(Request $request)
+    {
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        }
+        $order = Order::find($orderId);
+        $seccess = $order->saveOrder($request->name, $request->phone);
+
+        if ($seccess) {
+            session()->flash('seccess', 'Ваш заказ принят в обработку');
+        } else {
+            session()->flash('warning', 'Произошла ошибка');
+        }
+        
+        return redirect()->route('index');
     }
 
     public function basketPlace()
     {
-        return view('order');
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        }
+        $order = Order::find($orderId);
+        return view('order', compact('order'));
     }
 
     public function basketAdd($productId)
@@ -39,6 +67,10 @@ class BasketController extends Controller
         } else {
             $order->products()->attach($productId);
         }
+
+        $product = Product::find($productId);
+
+        session()->flash('seccess', 'Добавлен товар ' . $product->name);
 
         return redirect()->route('basket');
     }
@@ -60,6 +92,10 @@ class BasketController extends Controller
                 $pivotRow->update();
             }
         }
+
+        $product = Product::find($productId);
+        
+        session()->flash('warning', 'Товар удален ' . $product->name);
 
         return redirect()->route('basket');
     }

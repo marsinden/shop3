@@ -27,11 +27,12 @@
                     <li><a href="{{ route('categories') }}">Категории</a>
                     </li>
                     <li><a href="{{ route('basket') }}">В корзину</a></li>
-                    <li><a href="/reset">Сбросить проект в начальное состояние</a></li>
+                    <li><a href="не надо">Сбросить проект в начальное состояние</a></li>
                     <li><a href="/locale/en">en</a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">₽<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">₽<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/currency/RUB">₽</a></li>
                             <li><a href="/currency/USD">$</a></li>
@@ -49,8 +50,15 @@
     </nav>
 
     <div class="container">
-        @yield('content')
-        
+        <div class="starter-template">
+            @if (session()->has('seccess'))
+            <p class="alert alert-success">{{ session()->get('seccess') }}</p>
+            @endif
+            @if (session()->has('warning'))
+            <p class="alert alert-warning">{{ session()->get('warning') }}</p>
+            @endif
+            @yield('content')
+        </div>
     </div>
 </body>
 
