@@ -3,7 +3,7 @@
 
 
 @section('content')
-<p class="alert alert-success">Добавлен товар {{ $order->products->last()->name }}</p>
+{{-- <p class="alert alert-success">Добавлен товар {{ $order->products->last()->name }}</p> This wrong kos its not flash--}} 
 <h1>Корзина</h1>
 <p>Оформление заказа</p>
 <div class="panel">
